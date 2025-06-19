@@ -23,7 +23,7 @@ app.get("/", (req: Request, res: Response) => {
     return;
 })
 
-app.get("/helius", async (req: Request, res: Response) => {
+app.post("/helius", async (req: Request, res: Response) => {
     console.log("req.body is : ", req.body);
     const incomingData = data.nativeTransfers;
     const myPublicKey = process.env.PUBLIC_KEY;
