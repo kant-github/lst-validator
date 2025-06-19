@@ -17,9 +17,14 @@ const data = {
     }],
 }
 
+app.get("/", (req: Request, res: Response) => {
+    console.log("hey logged");
+    res.send("logged");
+    return;
+})
 
 app.get("/helius", async (req: Request, res: Response) => {
-
+    console.log("req.body is : ", req.body);
     const incomingData = data.nativeTransfers;
     const myPublicKey = process.env.PUBLIC_KEY;
     const fromAddress = incomingData.find(tx => tx.toUserAccount === myPublicKey)
