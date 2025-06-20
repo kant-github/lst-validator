@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
+app.use(express.json());
 const server = http.createServer(app);
 
 const data = {
@@ -25,6 +26,10 @@ app.get("/", (req: Request, res: Response) => {
 
 app.post("/helius", async (req: Request, res: Response) => {
     console.log("req.body is : ", req.body);
+    console.log("Webhook type:", req.body.type);
+    console.log("Signature:", req.body.signature);
+
+
     const incomingData = data.nativeTransfers;
     const myPublicKey = process.env.PUBLIC_KEY;
     const fromAddress = incomingData.find(tx => tx.toUserAccount === myPublicKey)
@@ -36,7 +41,7 @@ app.post("/helius", async (req: Request, res: Response) => {
     }
     const fromAdressKey = new PublicKey(fromAddress.fromUserAccount);
     const mintTokensTxHash = await mintTokens(fromAdressKey, Number(amount));
-    res.send(mintTokensTxHash)
+    res.status(200).send(mintTokensTxHash)
     return;
 })
 
